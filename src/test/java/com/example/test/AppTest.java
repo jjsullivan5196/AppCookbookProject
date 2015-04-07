@@ -9,9 +9,21 @@ import org.junit.Test;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.junit.Before;
 
 
 public class AppTest {
+
+    /*@Before
+    public void setUp() {
+        this.names = new ArrayList<String>();
+        names.add("a");
+        names.add("b");
+        names.add("c");
+        names.add("d");
+        names.add("e");
+        names.add("f");
+    }*/ //Didn't work
 
     @Test
     public void groupsHaveThreePeople() throws Exception {

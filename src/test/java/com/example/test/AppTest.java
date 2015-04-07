@@ -1,41 +1,61 @@
 package com.example.test;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.Collections;
 import java.util.List;
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import org.junit.Ignore;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+import org.junit.Before;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
+
+public class AppTest {
+
+    /*@Before
+    public void setUp() {
+        this.names = new ArrayList<String>();
+        names.add("a");
+        names.add("b");
+        names.add("c");
+        names.add("d");
+        names.add("e");
+        names.add("f");
+    }*/ //Didn't work
+
+    @Test
+    public void groupsHaveThreePeople() throws Exception {
+        List<String> names = new ArrayList<String>();
+        names.add("a");
+        names.add("b");
+        names.add("c");
+        names.add("d");
+        names.add("e");
+        names.add("f");
+        App app = new App(names);
+        List<String> group = app.createGroup("a");
+        assertEquals(group.size(), 3);
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
+    @Test
+    public void givenUsernameIsInGroup() throws Exception {
+        List<String> names = new ArrayList<String>();
+        names.add("a");
+        names.add("b");
+        names.add("c");
+        names.add("d");
+        names.add("e");
+        names.add("f");
+        App app = new App(names);
+        String name = "a";
+        List<String> group = app.createGroup(name);
+        assertEquals(group.contains(name), true);
     }
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testAllMembersInSameGroup() throws Exception
-    {
+    @Test
+    public void groupsHaveConsistentMembership() throws Exception {
         List<String> names = new ArrayList<String>();
         names.add("a");
         names.add("b");
@@ -56,8 +76,8 @@ public class AppTest
         assertEquals(actualC, expected);
     }
 
-    public void testSecondGroup() throws Exception
-    {
+    @Test
+    public void createSubgroups() {
         List<String> names = new ArrayList<String>();
         names.add("a");
         names.add("b");
@@ -66,11 +86,26 @@ public class AppTest
         names.add("e");
         names.add("f");
         App app = new App(names);
-        List<String> actual = app.createGroup("e");
-        List<String> expected = new ArrayList<String>();
-        expected.add("d");
-        expected.add("e");
-        expected.add("f");
-        assertEquals(actual, expected);
+        ArrayList<ArrayList<String>> groups = app.createSubgroups();
+        assertEquals(groups.size(), 2);
+        assertEquals(groups.get(0).size(), 3);
     }
+
+    @Test
+    public void findGroup() {
+        List<String> names = new ArrayList<String>();
+        names.add("a");
+        names.add("b");
+        names.add("c");
+        names.add("d");
+        names.add("e");
+        names.add("f");
+        App app = new App(names);
+        ArrayList<ArrayList<String>> groups = app.createSubgroups();
+        String name = "a";
+        ArrayList<String> group = app.findGroup(groups, name);
+        assertEquals(group.contains(name), true);
+    }
+
+
 }
